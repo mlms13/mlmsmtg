@@ -1,0 +1,5 @@
+-cp client
+-lib npm
+-lib thx.promise
+-main app.App
+-js public/js/client.js
