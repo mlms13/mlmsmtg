@@ -28,7 +28,13 @@ class App {
           "done" : false
         });
 
-        return db.insertOrReplace().into(item).values([row]).exec().promise();
+        return db.insertOrReplace().into(item).values([row]).exec().promise()
+          .mapSuccessPromise(function (_) {
+            return todoDb.select().from(item).where(Reflect.field(item, "done").eq(false)).exec().promise();
+          })
+          .success(function (results) {
+            trace(results);
+          });
       });
   }
 

@@ -3,3 +3,12 @@
 -lib thx.promise
 -main app.App
 -js public/js/client.js
+
+--next
+
+-cp staticserver
+-lib abe
+-lib express
+-lib hxnodejs
+-main Main
+-js bin/staticserver.js
