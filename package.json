@@ -1,0 +1,31 @@
+{
+  "name": "mlmsmtg",
+  "version": "0.0.1",
+  "description": "Card browser and deck builder for Magic",
+  "main": "./bin/staticserver.js",
+  "dependencies": {
+    "lovefield": "^2.1.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-stylus": "^2.1.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-util": "^3.0.7",
+    "nodemon": "^1.8.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mlms13/mlmsmtg.git"
+  },
+  "author": "Michael Martin-Smucker <mlmartin13@gmail.com> (http://www.martinsmucker.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mlms13/mlmsmtg/issues"
+  },
+  "homepage": "https://github.com/mlms13/mlmsmtg"
+}

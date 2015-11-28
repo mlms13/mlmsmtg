@@ -17,7 +17,7 @@ var gulp = require('gulp'),
         dest: './public'
       },
       js: {
-        all: [/* 'lovefield.js',*/ './public/js/client.js'],
+        all: ['./node_modules/lovefield/dist/lovefield.js', './public/js/client.js'],
         dest: './public/js'
       },
       stylus: {
