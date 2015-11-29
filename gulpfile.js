@@ -44,7 +44,7 @@ gulp.task('haxe', function (cb) {
 
 gulp.task('js', ['haxe'], function () {
   return gulp.src(paths.js.all)
-    .pipe(concat('bundle.js'))
+    // .pipe(concat('bundle.js'))
     .pipe(isProduction ? uglify() : gutil.noop())
     .pipe(gulp.dest(paths.js.dest))
     .pipe(lr());

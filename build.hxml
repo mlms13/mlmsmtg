@@ -1,7 +1,7 @@
 -cp client
 -lib npm
 -lib thx.promise
--main app.App
+-main app.Main
 -js public/js/client.js
 
 --next
