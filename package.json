@@ -4,6 +4,7 @@
   "description": "Card browser and deck builder for Magic",
   "main": "./bin/staticserver.js",
   "dependencies": {
+    "express": "^4.13.3",
     "lovefield": "^2.1.2"
   },
   "devDependencies": {
