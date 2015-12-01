@@ -1,6 +1,7 @@
 package app;
 
 import app.util.Storage.*;
+import app.views.*;
 import npm.lf.Schema;
 using thx.promise.Promise;
 
@@ -25,6 +26,8 @@ class Main {
           trace(results);
         });
     });
+
+    var app = new app.views.App(new AppApi(), Loading);
   }
 
   public static function main() {

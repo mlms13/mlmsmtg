@@ -1,5 +1,8 @@
 -cp client
 -lib npm
+-lib doom
+-lib dots
+-lib lies
 -lib thx.promise
 -main app.Main
 -js public/js/client.js
