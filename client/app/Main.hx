@@ -2,6 +2,7 @@ package app;
 
 import app.util.Storage.*;
 import app.views.*;
+import lies.Store;
 import npm.lf.Schema;
 using thx.promise.Promise;
 
