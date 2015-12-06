@@ -1,6 +1,7 @@
 package app;
 
 import app.util.Storage.*;
+import app.data.*;
 import app.views.*;
 import lies.Store;
 import npm.lf.Schema;
@@ -8,6 +9,7 @@ using thx.promise.Promise;
 
 class Main {
   public function new() {
+    var store = Store.create(Reducers.mtgApp, {});
     createSetTable();
     createCardTable();
     connect().success(function (db) {
@@ -28,7 +30,7 @@ class Main {
         });
     });
 
-    var app = new app.views.App(new AppApi(), Loading);
+    var app = new app.views.App(store);
   }
 
   public static function main() {

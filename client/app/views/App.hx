@@ -1,11 +1,19 @@
 package app.views;
 
-import Doom;
-import doom.ApiComponent;
+import app.data.AppState;
+import app.data.MtgAction;
+import Doom.*;
+import doom.ApiStatelessComponent;
+import lies.Store;
 
-class App extends ApiComponent<AppApi, AppState> {
-  public function new(prop : AppApi, state : AppState) {
-    super(prop, state);
-
+class App extends ApiStatelessComponent<Store<AppState, MtgAction>> {
+  override function render() {
+    return DIV([
+      "class" => "mtg-card-container"
+    ], [
+      UL([
+        "class" => "mtg-card-list"
+      ])
+    ]);
   }
 }

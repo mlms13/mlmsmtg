@@ -1,4 +1,4 @@
-package client.app.data;
+package app.data;
 
 typedef AppState = {
 
