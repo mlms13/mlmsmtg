@@ -1,6 +1,7 @@
 package app.util;
 
 import npm.lf.Schema;
+import npm.lf.schema.ConnectOptions;
 using thx.promise.Promise;
 
 class Storage {
@@ -47,7 +48,7 @@ class Storage {
     return builder;
   }
 
-  public static function connect() : Promise<npm.lf.Database> {
-    return createDeckBuilder().connect().promise();
+  public static function connect(?opts : ConnectOptions) : Promise<npm.lf.Database> {
+    return createDeckBuilder().connect(opts).promise();
   }
 }

@@ -12,25 +12,17 @@ class Main {
     var store = Store.create(Reducers.mtgApp, {});
     createSetTable();
     createCardTable();
-    connect().success(function (db) {
-      var item = db.getSchema().table("Item");
-      var row = item.createRow({
-        "id" : 1,
-        "description" : "Get a cup of coffee",
-        "deadline" : Date.now(),
-        "done" : false
-      });
-      return db.insertOrReplace().into(item).values([row])
-        .exec().promise()
-        .mapSuccessPromise(function (_) {
-          return db.select().from(item).where(Reflect.field(item, "done").eq(false)).exec().promise();
-        })
-        .success(function (results) {
-          trace(results);
-        });
+    connect({
+      onUpgrade : checkFirstLaunch
     });
 
     var app = new app.views.App(store);
+  }
+
+  function checkFirstLaunch(rawDb : npm.lf.raw.BackStore) {
+    if (rawDb.getVersion() == 0) {
+      trace("This was the first run");
+    }
   }
 
   public static function main() {
