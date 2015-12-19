@@ -1,7 +1,6 @@
 package app;
 
 import app.util.Storage.*;
-import app.data.*;
 import app.views.*;
 import lies.Store;
 import npm.lf.Schema;
@@ -9,14 +8,19 @@ using thx.promise.Promise;
 
 class Main {
   public function new() {
-    var store = Store.create(Reducers.mtgApp, {});
+    var initialState : State = {
+      name : "",
+      collection : []
+    };
+
+    var store : Store<State, Action> = Store.create(Reducers.mtgApp, initialState);
     createSetTable();
     createCardTable();
     connect({
       onUpgrade : checkFirstLaunch
     });
 
-    var app = new app.views.App(store);
+    var app = new CardCollection({}, store.state);
   }
 
   function checkFirstLaunch(rawDb : npm.lf.raw.BackStore) {
