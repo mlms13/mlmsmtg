@@ -1,5 +1,9 @@
 package app.views;
 
-typedef Card = {
+import Doom.*;
 
+class Card extends doom.Component<{}, app.state.Card> {
+  override function render() {
+    return div(state.name);
+  }
 }

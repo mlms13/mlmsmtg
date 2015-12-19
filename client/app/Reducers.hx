@@ -1,7 +1,9 @@
 package app;
 
+import lies.Reduced;
+
 class Reducers {
   public static function mtgApp(state : State, action : Action) {
-    return state;
+    return Reduced.fromState(state);
   }
 }
