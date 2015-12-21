@@ -1,6 +1,6 @@
 package app;
 
-import app.util.Storage.*;
+import app.util.Storage;
 import app.views.*;
 import lies.Store;
 import npm.lf.Schema;
@@ -14,13 +14,14 @@ class Main {
     };
 
     var store : Store<State, Action> = Store.create(Reducers.mtgApp, initialState);
-    createSetTable();
-    createCardTable();
-    connect({
-      onUpgrade : checkFirstLaunch
+    Storage.createSetTable();
+    Storage.createCardTable();
+    Storage.connect({
+      // onUpgrade : checkFirstLaunch
     });
 
     var app = new CardCollection({}, store.state);
+    Doom.mount(app, js.Browser.document.body);
   }
 
   function checkFirstLaunch(rawDb : npm.lf.raw.BackStore) {
