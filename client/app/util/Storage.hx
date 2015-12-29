@@ -5,6 +5,12 @@ import npm.lf.schema.ConnectOptions;
 using thx.promise.Promise;
 
 class Storage {
+  public static function init() {
+    Storage.createSetTable();
+    Storage.createCardTable();
+    Storage.connect();
+  }
+
   static function createDeckBuilder() {
     return Schema.create('deckbuilder', 1);
   }
