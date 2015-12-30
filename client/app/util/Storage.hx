@@ -1,5 +1,6 @@
 package app.util;
 
+import app.state.Card;
 import npm.lf.Schema;
 import npm.lf.schema.ConnectOptions;
 using thx.promise.Promise;
@@ -9,6 +10,11 @@ class Storage {
     Storage.createSetTable();
     Storage.createCardTable();
     Storage.connect();
+  }
+
+  public static function hasCards() {
+    // TODO...
+    return true;
   }
 
   static function createDeckBuilder() {
@@ -52,6 +58,10 @@ class Storage {
       .addColumn('types', npm.lf.Type.ARRAY_BUFFER)
       .addPrimaryKey(['id']);
     return builder;
+  }
+
+  public static function getAllCards() : Array<Card> {
+    return [];
   }
 
   public static function connect(?opts : ConnectOptions) : Promise<npm.lf.Database> {

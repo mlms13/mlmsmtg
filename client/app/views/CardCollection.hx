@@ -11,7 +11,7 @@ class CardCollection extends doom.Component<CardApi, State> {
     ], [
       ul([
         "class" => "mtg-card-list"
-      ], state.collection.map(function (card) {
+      ], state.selectedCollection.cards.map(function (card) {
         return li(new Card({}, card));
       }))
     ]);

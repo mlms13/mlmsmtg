@@ -1,5 +1,6 @@
 package app;
 
+import app.state.*;
 import app.util.Storage;
 import app.views.*;
 import lies.Store;
@@ -10,10 +11,14 @@ class Main {
   public function new() {
     Storage.init();
 
-    // TODO: check storage to determine initial state
     var initialState : State = {
-      name : "",
-      collection : []
+      selectedCollection : Storage.hasCards() ? {
+        name : "All Cards",
+        cards : Storage.getAllCards()
+      } : {
+        name : "",
+        cards : []
+      }
     };
 
     var store : Store<State, Action> = Store.create(Reducers.mtgApp, initialState);
