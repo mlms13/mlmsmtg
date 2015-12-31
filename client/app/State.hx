@@ -2,6 +2,9 @@ package app;
 
 import app.state.*;
 
-typedef State = {
-  selectedCollection : Collection
+enum State {
+  NoCards;
+  BrowseCards(collection : Collection);
+  // BuildDeck
+  // others?
 }
