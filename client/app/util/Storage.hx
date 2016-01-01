@@ -12,9 +12,12 @@ class Storage {
     Storage.connect();
   }
 
-  public static function hasCards() {
-    // TODO...
-    return true;
+  public static function hasCards() : Promise<Bool> {
+    return connect()
+      .mapSuccessPromise(function (db) {
+        // TODO...
+        return Promise.value(false);
+      });
   }
 
   static function createDeckBuilder() {

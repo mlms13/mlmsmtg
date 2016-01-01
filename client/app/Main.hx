@@ -5,17 +5,23 @@ import app.util.Storage;
 import app.view.*;
 import lies.Store;
 import npm.lf.Schema;
-using thx.promise.Promise;
 
 class Main {
   public function new() {
     Storage.init();
 
-    var initialState = Storage.hasCards() ? getInitialCollection() : State.NoCards;
-    var store = Store.create(Reducers.mtgApp, initialState);
+    Storage.hasCards()
+      .success(function (hasCards) {
+        var initialState = hasCards ? getInitialCollection() : State.NoCards;
+        var store = Store.create(Reducers.mtgApp, initialState);
 
-    var app = new App({}, store.state);
-    Doom.mount(app, js.Browser.document.body);
+        var app = new App({}, store.state);
+        Doom.mount(app, js.Browser.document.body);
+      })
+      .failure(function (e) {
+        // TODO...
+        trace(e);
+      });
   }
 
   function getInitialCollection() {
