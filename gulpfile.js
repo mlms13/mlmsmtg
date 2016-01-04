@@ -26,7 +26,7 @@ var gulp = require('gulp'),
         dest: './public/css'
       },
       haxe: {
-        all: ['./client/app/**/*.hx', './staticserver/**/*.hx']
+        all: ['./client/app/**/*.hx', './server/**/*.hx']
       }
     };
 
@@ -67,11 +67,11 @@ gulp.task('watch', ['build'], function () {
   gulp.watch(paths.stylus.all, ['stylus']);
 });
 
-gulp.task('static', ['build'], function () {
+gulp.task('server', ['build'], function () {
   nodemon({
-    'script': 'bin/staticserver.js',
+    'script': 'bin/server.js',
     'ignore': ['.git', 'public/**']
   });
 });
 
-gulp.task('default', ['static', 'watch']);
+gulp.task('default', ['server', 'watch']);

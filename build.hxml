@@ -9,9 +9,9 @@
 
 --next
 
--cp staticserver
+-cp server
 -lib abe
 -lib express
 -lib hxnodejs
 -main Main
--js bin/staticserver.js
+-js bin/server.js
