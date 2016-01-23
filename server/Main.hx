@@ -8,7 +8,12 @@ class Main {
   public static function main() {
     var app = new App(),
         api = app.sub("/api"),
-        stat = app.sub("/");
+        stat = app.sub("/"),
+        port = 3333;
+
+    if (js.Node.process.argv[2] != null) {
+      port = Std.parseInt(js.Node.process.argv[2]);
+    }
 
     api.router.register(new Cards());
 
@@ -18,13 +23,13 @@ class Main {
         // if they requested a resource with a file extension, just send it
         next.call();
       } else {
-        // otherwise, always return the same mithril app for routing purposes
+        // otherwise, return the same app and let the client handle routing
         res.sendFile('index.html', { root : './public' });
       }
     });
     stat.router.serve('/', './public');
-
-    // server all subrouters on 3333
-    app.http(3333);
+    app.http(port, function () {
+      trace('Listening on port $port');
+    });
   }
 }
