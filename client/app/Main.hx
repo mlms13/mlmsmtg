@@ -7,7 +7,7 @@ import lies.Store;
 import npm.lf.Schema;
 
 class Main {
-  public function new() {
+  public static function main() {
     Storage.init();
 
     Storage.hasCards()
@@ -31,14 +31,11 @@ class Main {
       });
   }
 
-  function getInitialCollection() {
+  static function getInitialCollection() {
     return State.BrowseCards({
       name : "All Cards",
       cards : Storage.getAllCards()
     });
   }
 
-  public static function main() {
-    new Main();
-  }
 }
