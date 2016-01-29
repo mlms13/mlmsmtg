@@ -6,6 +6,7 @@ import Doom.*;
 
 class CardCollection extends doom.Component<CardApi, Collection> {
   override function render() {
+    trace("rendering browse card collection");
     return div([
       "class" => "mtg-card-container"
     ], [

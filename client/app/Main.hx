@@ -15,8 +15,15 @@ class Main {
         var initialState = hasCards ? getInitialCollection() : State.NoCards;
         var store = Store.create(Reducers.mtgApp, initialState);
 
-        var app = new App({}, store.state);
+        var app = new App({
+          loadCards: function () {
+            store.dispatch(Action.RequestInitialData);
+          }
+        }, { appState : store.state });
         Doom.mount(app, js.Browser.document.body);
+        store.subscribe(function (state, _, _) {
+          app.update({ appState : state });
+        });
       })
       .failure(function (e) {
         // TODO...

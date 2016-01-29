@@ -5,6 +5,7 @@
 -lib lies
 -lib thx.http
 -lib thx.promise
+-lib thx.stream
 -main app.Main
 -js public/js/client.js
 
