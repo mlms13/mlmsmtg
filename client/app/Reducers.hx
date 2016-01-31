@@ -16,7 +16,6 @@ class Reducers {
       case RequestInitialData: getCards(state);
       case DataLoaded(Success(collection)): Reduced.fromState(BrowseCards(collection));
       case DataLoaded(Failure(err)): Reduced.fromState(ErrorView(err));
-    // case _: Reduced.fromState(state);
     };
   }
 

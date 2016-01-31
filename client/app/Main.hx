@@ -20,6 +20,7 @@ class Main {
             store.dispatch(Action.RequestInitialData);
           }
         }, { appState : store.state });
+
         Doom.mount(app, js.Browser.document.body);
         store.subscribe(function (state, _, _) {
           app.update({ appState : state });

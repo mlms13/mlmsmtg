@@ -2,8 +2,10 @@ package app.view;
 
 import Doom.*;
 
-class Card extends doom.Component<{}, app.state.Card> {
+class Card extends Doom {
+  @:state var card : app.state.Card;
+
   override function render() {
-    return div(state.name);
+    return div(card.name);
   }
 }

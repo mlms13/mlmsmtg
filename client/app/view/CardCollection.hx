@@ -4,19 +4,18 @@ import app.state.Collection;
 import app.Action;
 import Doom.*;
 
-class CardCollection extends doom.Component<CardApi, Collection> {
+class CardCollection extends Doom {
+  @:state var collection : app.state.Collection;
+
   override function render() {
-    trace("rendering browse card collection");
     return div([
       "class" => "mtg-card-container"
     ], [
       ul([
         "class" => "mtg-card-list"
-      ], state.cards.map(function (card) {
-        return li(new Card({}, card));
+      ], collection.cards.map(function (card) {
+        return li(Card.with(card));
       }))
     ]);
   }
 }
-
-typedef CardApi = {};
