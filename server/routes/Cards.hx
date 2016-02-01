@@ -6,6 +6,6 @@ import abe.App;
 class Cards implements abe.IRoute{
   @:get("/")
   function getCards() {
-    response.sendFile('AllCards.json', { root : './public' });
+    response.sendFile('AllSets.json', { root : './public' });
   }
 }

@@ -33,10 +33,12 @@ class Main {
   }
 
   static function getInitialCollection() {
-    return State.BrowseCards({
+    var collection = Collection.fromDynamic({
       name : "All Cards",
       cards : Storage.getAllCards()
     });
+
+    return State.BrowseCards(collection);
   }
 
 }
