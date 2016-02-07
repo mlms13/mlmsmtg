@@ -3,12 +3,10 @@ package app;
 import app.state.*;
 
 enum Action {
+  CheckForData;
   RequestInitialData;
-  DataLoaded(results : LoadResult);
-  // Load;
-}
-
-enum LoadResult {
-  Success(collection : Collection);
-  Failure(error : thx.Error);
+  SaveCollection(collection : Collection);
+  DisplayCollection(collection : Collection);
+  DisplayNoCards;
+  DisplayError(err : thx.Error);
 }

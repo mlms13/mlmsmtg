@@ -9,8 +9,9 @@ class App extends Doom {
   @:state var appState : State;
 
   override function render() : Node return switch appState {
+    case Loading(message): Loader.with(message);
     case NoCards: EmptyCollection.with(loadCards);
-    case BrowseCards(collection): CardCollection.with(collection);
-    case ErrorView(err): div(err.message);
+    case BrowseCollection(collection): CardCollection.with(collection);
+    case Error(err): div(err.message);
   }
 }

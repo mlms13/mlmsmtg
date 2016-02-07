@@ -3,9 +3,10 @@ package app;
 import app.state.*;
 
 enum State {
+  Loading(message : String);
+  Error(err : thx.Error);
   NoCards;
-  BrowseCards(collection : Collection);
-  ErrorView(err : thx.Error);
+  BrowseCollection(collection : Collection);
   // BuildDeck
   // others?
 }

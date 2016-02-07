@@ -1,32 +1,19 @@
 package app.util;
 
-import app.state.Card;
+import app.state.*;
+import haxe.ds.Option;
 import npm.lf.Schema;
 import npm.lf.schema.ConnectOptions;
+import thx.Error;
 using thx.promise.Promise;
 
 class Storage {
-  public static function init() {
-    Storage.createSetTable();
-    Storage.createCardTable();
-    Storage.connect();
-  }
-
-  public static function hasCards() : Promise<Bool> {
-    return connect()
-      .mapSuccessPromise(function (db) {
-        // TODO...
-        return Promise.value(false);
-      });
-  }
-
   static function createDeckBuilder() {
-    return Schema.create('deckbuilder', 1);
+    return Schema.create('deckbuilder', 4);
   }
 
-  public static function createSetTable() {
-    var builder = createDeckBuilder();
-    builder.createTable('Set')
+  static function createCollectionTable(builder) {
+    return builder.createTable('Collection')
       .addColumn('name', npm.lf.Type.STRING)
       .addColumn('code', npm.lf.Type.STRING)
       .addColumn('gathererCode', npm.lf.Type.STRING)
@@ -35,13 +22,11 @@ class Storage {
       .addColumn('border', npm.lf.Type.STRING)
       .addColumn('type', npm.lf.Type.STRING)
       .addColumn('booster', npm.lf.Type.ARRAY_BUFFER)
-      .addColumn('cards', npm.lf.Type.ARRAY_BUFFER)
       .addPrimaryKey(['code']);
   }
 
-  public static function createCardTable() {
-    var builder = createDeckBuilder();
-    builder.createTable('Card')
+  static function createCardTable(builder) {
+    return builder.createTable('Card')
       .addColumn('artist', npm.lf.Type.STRING)
       .addColumn('cmc', npm.lf.Type.INTEGER)
       .addColumn('colors', npm.lf.Type.ARRAY_BUFFER)
@@ -60,14 +45,39 @@ class Storage {
       .addColumn('type', npm.lf.Type.STRING)
       .addColumn('types', npm.lf.Type.ARRAY_BUFFER)
       .addPrimaryKey(['id']);
-    return builder;
   }
 
-  public static function getAllCards() : Array<Card> {
-    return [];
+  public static function getDefaultCollection() : Promise<Option<Collection>> {
+    return connect()
+      .mapSuccessPromise(function (db) {
+        var collections = db.getSchema().table('Collection');
+
+        return db.select()
+          .from(collections)
+          .limit(1)
+          .exec().promise();
+      })
+      .mapSuccessPromise(function (rows) {
+        if (rows != null && rows.length > 0) {
+          try {
+            var collection = Collection.fromDynamic(rows[0]);
+            return Promise.value(Some(collection));
+          } catch (e : Dynamic) {
+            return Promise.error(Error.fromDynamic(e));
+          }
+        } else {
+          return Promise.value(None);
+        }
+      })
+      .failure(function (e) {
+        trace(e);
+      });
   }
 
   public static function connect(?opts : ConnectOptions) : Promise<npm.lf.Database> {
-    return createDeckBuilder().connect(opts).promise();
+    var builder = createDeckBuilder();
+    createCollectionTable(builder);
+    createCardTable(builder);
+    return builder.connect(opts).promise();
   }
 }
