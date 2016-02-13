@@ -3,6 +3,7 @@ package app.util;
 import app.state.*;
 import haxe.ds.Option;
 import npm.lf.Schema;
+import npm.lf.schema.Builder;
 import npm.lf.schema.ConnectOptions;
 import thx.Error;
 using thx.promise.Promise;
@@ -12,8 +13,9 @@ class Storage {
     return Schema.create('deckbuilder', 4);
   }
 
-  static function createCollectionTable(builder) {
+  static function createCollectionTable(builder : Builder) {
     return builder.createTable('Collection')
+      .addColumn('id', npm.lf.Type.INTEGER)
       .addColumn('name', npm.lf.Type.STRING)
       .addColumn('code', npm.lf.Type.STRING)
       .addColumn('gathererCode', npm.lf.Type.STRING)
@@ -21,11 +23,17 @@ class Storage {
       .addColumn('releaseDate', npm.lf.Type.DATE_TIME)
       .addColumn('border', npm.lf.Type.STRING)
       .addColumn('type', npm.lf.Type.STRING)
-      .addColumn('booster', npm.lf.Type.ARRAY_BUFFER)
-      .addPrimaryKey(['code']);
+      // .addColumn('booster', npm.lf.Type.ARRAY_BUFFER)
+      .addColumn('parent', npm.lf.Type.INTEGER)
+      .addNullable(['code', 'gathererCode', 'magicCardsInfoCode', 'releaseDate', 'border', 'type', 'parent'])
+      .addPrimaryKey([{ name : 'id', autoIncrement : true }])
+      .addForeignKey('fkparent', {
+        local: 'parent',
+        ref: 'Collection.id'
+      });
   }
 
-  static function createCardTable(builder) {
+  static function createCardTable(builder : Builder) {
     return builder.createTable('Card')
       .addColumn('artist', npm.lf.Type.STRING)
       .addColumn('cmc', npm.lf.Type.INTEGER)
@@ -45,6 +53,20 @@ class Storage {
       .addColumn('type', npm.lf.Type.STRING)
       .addColumn('types', npm.lf.Type.ARRAY_BUFFER)
       .addPrimaryKey(['id']);
+  }
+
+  static function createCollectionCardsTable(builder : Builder) {
+    return builder.createTable('CollectionCards')
+      .addColumn('cardId', npm.lf.Type.STRING)
+      .addColumn('collectionId', npm.lf.Type.INTEGER)
+      .addForeignKey('fkcardId', {
+        local: 'cardId',
+        ref: 'Card.id'
+      })
+      .addForeignKey('fkcollectionId', {
+        local: 'collectionId',
+        ref: 'Collection.id'
+      });
   }
 
   public static function getDefaultCollection() : Promise<Option<Collection>> {
@@ -78,6 +100,7 @@ class Storage {
     var builder = createDeckBuilder();
     createCollectionTable(builder);
     createCardTable(builder);
+    createCollectionCardsTable(builder);
     return builder.connect(opts).promise();
   }
 }
