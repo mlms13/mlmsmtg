@@ -6,6 +6,6 @@ class EmptyCollection extends Doom {
   @:api var triggerCardLoad : Void -> Void;
 
   override function render() {
-    return button(["click" => triggerCardLoad], "Download Cards");
+    return div(button(["click" => triggerCardLoad], "Download Cards"));
   }
 }

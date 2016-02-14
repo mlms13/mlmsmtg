@@ -1,4 +1,4 @@
-package app.util;
+package app.storage;
 
 import app.state.*;
 import haxe.ds.Option;
@@ -6,9 +6,10 @@ import npm.lf.Schema;
 import npm.lf.schema.Builder;
 import npm.lf.schema.ConnectOptions;
 import thx.Error;
+import thx.Nil;
 using thx.promise.Promise;
 
-class Storage {
+class Lovefield {
   static function createDeckBuilder() {
     return Schema.create('deckbuilder', 4);
   }
@@ -94,6 +95,10 @@ class Storage {
       .failure(function (e) {
         trace(e);
       });
+  }
+
+  public static function saveCollection(collection : Collection) : Promise<Nil> {
+    return Promise.nil;
   }
 
   public static function connect(?opts : ConnectOptions) : Promise<npm.lf.Database> {

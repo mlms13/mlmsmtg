@@ -1,13 +1,13 @@
 package app;
 
 import app.state.*;
-import app.util.Storage;
 import app.view.*;
 import lies.Store;
 import npm.lf.Schema;
 
 class Main {
   public static function main() {
+    app.util.Config.init(new app.storage.Memory());
     var initialState = State.Loading("Checking for cards"),
         store = Store.create(Reducers.mtgApp, initialState);
 

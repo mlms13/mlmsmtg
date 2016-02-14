@@ -3,7 +3,8 @@ package app;
 import app.Action;
 import app.State;
 import app.state.*;
-import app.util.Storage;
+import app.storage.Memory;
+import app.util.Config;
 import lies.Reduced;
 using thx.Arrays;
 import thx.Error;
@@ -25,11 +26,11 @@ class Reducers {
   }
 
   static function queryData(state) {
-    var nextAction = Storage.getDefaultCollection()
+    var nextAction = Config.storage.getDefaultCollection()
       .mapEither(function (collection) {
         return switch collection {
           case Some(collection): DisplayCollection(collection);
-          case None: RequestInitialData;
+          case None: DisplayNoCards;
         }
       }, function (err : Error) {
         return DisplayError(err);
@@ -70,7 +71,14 @@ class Reducers {
   }
 
   static function saveCollection(state, collection : Collection) {
-    // TODO: ...
-    return Reduced.fromState(state);
+    var nextAction = Config.storage.saveCollection(collection)
+      .mapEither(function (_) {
+        // successfully saved cards
+        return DisplayCollection(collection);
+      }, function (err) {
+        return DisplayError(err);
+      });
+
+    return Reduced.fromState(state).withFuture(nextAction);
   }
 }
